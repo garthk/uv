@@ -11,6 +11,7 @@ use itertools::Itertools;
 use petgraph::visit::EdgeRef;
 use rustc_hash::{FxHashMap, FxHashSet};
 use toml_edit::{value, Array, ArrayOfTables, InlineTable, Item, Table, Value};
+use tracing::debug;
 use url::Url;
 
 use cache_key::RepositoryUrl;
@@ -93,6 +94,10 @@ impl Lock {
             if !dist.is_base() {
                 continue;
             }
+            if graph.reachability[&node_index].is_false() {
+                debug!("Removing unreachable package: `{}`", dist.package_id());
+                continue;
+            }
             let fork_markers = graph
                 .fork_markers(dist.name(), &dist.version, dist.dist.version_or_url().url())
                 .cloned()
@@ -107,6 +112,10 @@ impl Lock {
                 else {
                     continue;
                 };
+                // Prune edges leading to unreachable nodes.
+                if graph.reachability[&edge.target()].is_false() {
+                    continue;
+                }
                 let marker = edge.weight().clone();
                 package.add_dependency(dependency_dist, marker, root)?;
             }
@@ -125,6 +134,9 @@ impl Lock {
             let ResolutionGraphNode::Dist(dist) = &graph.petgraph[node_index] else {
                 continue;
             };
+            if graph.reachability[&node_index].is_false() {
+                continue;
+            }
             if let Some(extra) = dist.extra.as_ref() {
                 let id = PackageId::from_annotated_dist(dist, root)?;
                 let Some(package) = packages.get_mut(&id) else {
@@ -139,6 +151,10 @@ impl Lock {
                     else {
                         continue;
                     };
+                    // Prune edges leading to unreachable nodes.
+                    if graph.reachability[&edge.target()].is_false() {
+                        continue;
+                    }
                     let marker = edge.weight().clone();
                     package.add_optional_dependency(
                         extra.clone(),
@@ -162,6 +178,10 @@ impl Lock {
                     else {
                         continue;
                     };
+                    // Prune edges leading to unreachable nodes.
+                    if graph.reachability[&edge.target()].is_false() {
+                        continue;
+                    }
                     let marker = edge.weight().clone();
                     package.add_dev_dependency(group.clone(), dependency_dist, marker, root)?;
                 }
