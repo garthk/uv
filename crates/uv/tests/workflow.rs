@@ -36,7 +36,7 @@ fn packse_add_remove_one_package() -> Result<()> {
         assert_snapshot!(diff, @r###"
         --- old
         +++ new
-        @@ -317,20 +317,21 @@
+        @@ -306,20 +306,21 @@
          name = "packse"
          version = "0.0.0"
          source = { editable = "." }
@@ -58,7 +58,7 @@ fn packse_add_remove_one_package() -> Result<()> {
              { name = "pypiserver" },
              { name = "watchfiles" },
          ]
-        @@ -345,20 +346,21 @@
+        @@ -334,20 +335,21 @@
          [package.metadata]
          requires-dist = [
              { name = "chevron-blue", specifier = ">=0.2.1" },
@@ -80,7 +80,7 @@ fn packse_add_remove_one_package() -> Result<()> {
              { name = "syrupy", specifier = ">=4.6.0" },
          ]
 
-        @@ -612,20 +614,29 @@
+        @@ -601,20 +603,29 @@
              { name = "rfc3986" },
              { name = "rich" },
              { name = "urllib3" },
@@ -120,7 +120,7 @@ fn packse_add_remove_one_package() -> Result<()> {
         assert_snapshot!(diff, @r###"
         --- old
         +++ new
-        @@ -317,21 +317,20 @@
+        @@ -306,21 +306,20 @@
          name = "packse"
          version = "0.0.0"
          source = { editable = "." }
@@ -142,7 +142,7 @@ fn packse_add_remove_one_package() -> Result<()> {
              { name = "pypiserver" },
              { name = "watchfiles" },
          ]
-        @@ -346,21 +345,20 @@
+        @@ -335,21 +334,20 @@
          [package.metadata]
          requires-dist = [
              { name = "chevron-blue", specifier = ">=0.2.1" },
@@ -164,7 +164,7 @@ fn packse_add_remove_one_package() -> Result<()> {
              { name = "syrupy", specifier = ">=4.6.0" },
          ]
 
-        @@ -611,29 +609,20 @@
+        @@ -600,29 +598,20 @@
              { name = "readme-renderer" },
              { name = "requests" },
              { name = "requests-toolbelt" },
@@ -270,7 +270,7 @@ fn packse_promote_transitive_to_direct_then_remove() -> Result<()> {
         assert_snapshot!(diff, @r###"
         --- old
         +++ new
-        @@ -316,20 +316,21 @@
+        @@ -305,20 +305,21 @@
          [[package]]
          name = "packse"
          version = "0.0.0"
@@ -292,7 +292,7 @@ fn packse_promote_transitive_to_direct_then_remove() -> Result<()> {
          serve = [
              { name = "pypiserver" },
              { name = "watchfiles" },
-        @@ -344,20 +345,21 @@
+        @@ -333,20 +334,21 @@
 
          [package.metadata]
          requires-dist = [
@@ -324,7 +324,7 @@ fn packse_promote_transitive_to_direct_then_remove() -> Result<()> {
         assert_snapshot!(diff, @r###"
         --- old
         +++ new
-        @@ -316,21 +316,20 @@
+        @@ -305,21 +305,20 @@
          [[package]]
          name = "packse"
          version = "0.0.0"
@@ -346,7 +346,7 @@ fn packse_promote_transitive_to_direct_then_remove() -> Result<()> {
          serve = [
              { name = "pypiserver" },
              { name = "watchfiles" },
-        @@ -345,21 +344,20 @@
+        @@ -334,21 +333,20 @@
 
          [package.metadata]
          requires-dist = [
